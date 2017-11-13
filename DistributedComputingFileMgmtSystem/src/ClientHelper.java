@@ -6,12 +6,12 @@ import java.io.*;
  * for an Echo client using connectionless datagram socket.
  * @author M. L. Liu
  */
-public class EchoClientHelper1 {
+public class ClientHelper {
    private MyClientDatagramSocket mySocket;
    private InetAddress serverHost;
    private int serverPort;
 
-   EchoClientHelper1(String hostName, String portNum) 
+   ClientHelper(String hostName, String portNum)
       throws SocketException, UnknownHostException { 
   	   this.serverHost = InetAddress.getByName(hostName);
   		this.serverPort = Integer.parseInt(portNum);
@@ -22,12 +22,22 @@ public class EchoClientHelper1 {
 	
    public String getLoginDetails( String message)
       throws SocketException, IOException {                                                                                 
-      String echo = "";    
+      String response = "";
       mySocket.loginLogout( serverHost, serverPort, message);
 	   // now receive the echo
-      echo = mySocket.receiveMessage();
-      return echo;
+      response = mySocket.receiveMessage();
+      return response;
    } //end getEcho
+
+   public String register(String message)
+           throws SocketException, IOException {
+      String response = "";
+      mySocket.createAccount( serverHost, serverPort, message);
+      // now receive the echo
+      response = mySocket.receiveMessage();
+      return response;
+
+   }
 
    public void done( ) throws SocketException {
       mySocket.close( );
