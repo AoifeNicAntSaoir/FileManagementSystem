@@ -18,12 +18,13 @@ public class Client {
          String message, serverResult;
          
          while (!done) {
-            System.out.println("Enter your option\n" +
+            System.out.println("\n\nEnter your option" +
                                  "\n1. Login" +
                                  "\n2. Logout" +
                                  "\n3. Upload" +
                                  "\n4. Download" +
-                                 "\n5. Register");
+                                 "\n5. Register" +
+                                 "\n6 Quit");
             String option = br.readLine();
 
             switch(option) {
@@ -35,11 +36,14 @@ public class Client {
                   else if(option.equals("2")){
                      System.out.println("You want to log out");
                   }
-                  System.out.println("Enter firstname");
-                  String firstname = br.readLine();
+                  System.out.println("Enter username");
+                  String username = br.readLine();
                   System.out.println("Enter password");
                   String password = br.readLine();
-                  message = "1" + ", " + firstname + ", " + password;
+                  if(username.equals("") || username.isEmpty()) {
+                     throw new EmptyArgsException("You left Empty Fields");
+                  }
+                  message = "1" + ", " + username + ", " + password;
                   serverResult = helper.getLoginDetails( message);
                   System.out.println(serverResult);
                   break;
@@ -48,13 +52,15 @@ public class Client {
                case "5":
                   System.out.println("You want to register");
                   System.out.println("Enter firstname");
-                  firstname = br.readLine();
+                  username = br.readLine();
                   System.out.println("Enter password");
                   password = br.readLine();
-                  message = "5" + ", " + firstname + ", " + password;
+                  message = "5" + ", " + username + ", " + password;
                   serverResult = helper.register( message);
                   System.out.println(serverResult);
-
+                  break;
+               case "6":
+                  System.out.println("Quitting!");
                   break;
 
 

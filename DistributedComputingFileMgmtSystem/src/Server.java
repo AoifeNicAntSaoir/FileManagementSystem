@@ -56,10 +56,10 @@ public class Server {
                     case "5":
                         System.out.println("Create account - server");
 
-                        createUser(username, password);
-                        message = "Account successfully created ";
+                       String resp = createUser(username, password);
+
                         mySocket.sendMessage(request.getAddress(),
-                                request.getPort(), message);
+                                request.getPort(), resp);
 
                         break;
 
@@ -73,38 +73,43 @@ public class Server {
     } //end main
 
 
-    public static void createUser(String username, String password) {
+    public static String createUser(String username, String password) {
         BufferedWriter bw = null;
         FileWriter fw = null;
-        String path = "C:/FileManagementSystem/DistributedComputingFileMgmtSystem/users/";
-        File file = new File(path + username);
-        if (file.exists()) {
-            System.out.println("The directory already exists @ " + path + username);
-        } else {
-            file.mkdir();
-            System.out.println("Directory is created for " + username);
-            String message = username + "," + " " + password;
-            try {
-                fw = new FileWriter("Users.txt", true);
-                bw = new BufferedWriter(fw);
-                bw.write(message + "\n");
-                bw.append("");
-
-                System.out.println("Users were added to file");
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
+        String path = "C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\users\\";;
+        File dir = new File(path+username);
+        String serverMessage = "default mssg";
+        if(!dir.exists()) {
+            if (dir.mkdirs()) {
+                System.out.println(dir.toString() + " has been created");
                 try {
-                    if (bw != null)
-                        bw.close();
-                    if (fw != null)
-                        fw.close();
+                    String message = username + ", " + password;
+                    fw = new FileWriter("Users.txt", true);
+                    bw = new BufferedWriter(fw);
+                    bw.write(message + "\n");
+                    bw.append("");
 
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                    System.out.println("Users were added to file");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (bw != null)
+                            bw.close();
+                        if (fw != null)
+                            fw.close();
+
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    serverMessage = "User Created:" + username;
                 }
+            } else {
+                System.out.println("error occured");
+                serverMessage = "Sorry an error occured - user may already exist or something went wrong";
             }
         }
+        return serverMessage;
     }
 
 }//end class

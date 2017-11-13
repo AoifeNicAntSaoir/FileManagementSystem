@@ -5,15 +5,20 @@ import java.io.File;
  */
 public class CreatingDirectory {
     public static void main(String[] args) {
-        String path = "C:/FileManagementSystem/DistributedComputingFileMgmtSystem/users/";
-        String dirName = "yo";
-        File file = new File(path + dirName);
-        if (file.exists()) {
-            System.out.println("The directory already exists @ " + path + dirName);
+        String path = "C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\users\\";
+        String name = "john";
+       File dir = new File(path+name);
+        if(dir.exists())
+        {
+            System.out.println("Already exists");
         }
-        else{
-            file.mkdir();
-            System.out.println("Directory is created!");
+        else
+        {
+            dir.mkdir();
+            System.out.println(dir.toString() + " has been created");
         }
+
+
+
     }
 }
