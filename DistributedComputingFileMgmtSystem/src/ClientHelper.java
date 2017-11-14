@@ -23,7 +23,7 @@ public class ClientHelper {
    public String getLoginDetails( String message)
       throws SocketException, IOException {                                                                                 
       String response = "";
-      mySocket.loginLogout( serverHost, serverPort, message);
+      mySocket.loginLogout(serverHost, serverPort, message);
 	   // now receive the echo
       response = mySocket.receiveMessage();
       return response;

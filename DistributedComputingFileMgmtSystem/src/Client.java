@@ -5,7 +5,6 @@ import java.io.*;
  * @author M. L. Liu
  */
 public class Client {
-   static final String endMessage = ".";
    public static void main(String[] args) {
       InputStreamReader is = new InputStreamReader(System.in);
       BufferedReader br = new BufferedReader(is);
@@ -51,10 +50,12 @@ public class Client {
                case "4":
                case "5":
                   System.out.println("You want to register");
-                  System.out.println("Enter firstname");
+                  System.out.println("Enter username");
                   username = br.readLine();
                   System.out.println("Enter password");
                   password = br.readLine();
+                  if(username.equals("") || password.equals(""))
+                     throw new EmptyArgsException("Missing fields");
                   message = "5" + ", " + username + ", " + password;
                   serverResult = helper.register( message);
                   System.out.println(serverResult);

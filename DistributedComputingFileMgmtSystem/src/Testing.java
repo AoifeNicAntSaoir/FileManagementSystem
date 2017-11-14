@@ -1,17 +1,28 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Created by Aoife Sayers on 11/11/2017.
  */
 public class Testing {
     public static void main(String[] args) {
 
-        String string = "1, Aoife, mypassword";
-        String[] parts = string.split(",");
-        String part1 = parts[0]; // 004
-        String part2 = parts[1]; // 034556
-        String part3 = parts[2];
+        List<User> friends = new ArrayList<>();
+        friends.add(new User("Aoife", "hi"));
+        friends.add(new User("Caspar", "boo"));
 
-        System.out.println(part1.trim());
-        System.out.println(part2.trim());
-        System.out.println(part3.trim());
+        Iterator<User> iter = friends.iterator();
+       for(User u: friends){
+           int i=0;
+           if(u.getUsername()=="Aoife"){
+               iter.remove();
+           }
+        }
+
+        friends.remove(0);
+        for(User u:friends){
+            System.out.println(u.getUsername() + " " + u.getPassword());
+        }
     }
 }

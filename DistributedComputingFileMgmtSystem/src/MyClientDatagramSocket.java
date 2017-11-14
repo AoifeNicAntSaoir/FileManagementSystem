@@ -14,13 +14,9 @@ static final int MAX_LEN = 100;
    MyClientDatagramSocket(int portNo) throws SocketException{
      super(portNo);
    }
-   public void loginLogout(InetAddress receiverHost,
-                           int receiverPort,
-                           String message)
-   		          throws IOException {	
+   public void loginLogout(InetAddress receiverHost, int receiverPort, String message) throws IOException {
          byte[ ] sendBuffer = message.getBytes( );                                     
-         DatagramPacket datagram = 
-            new DatagramPacket(sendBuffer, sendBuffer.length, 
+         DatagramPacket datagram = new DatagramPacket(sendBuffer, sendBuffer.length,
                                   receiverHost, receiverPort);
          this.send(datagram);
    } // end sendMessage

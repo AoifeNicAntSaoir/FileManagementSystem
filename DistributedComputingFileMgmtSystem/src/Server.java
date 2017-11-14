@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This module contains the application logic of an echo server
@@ -42,8 +44,9 @@ public class Server {
                 switch (messageCode) {
                     case "1":
                         System.out.println("Log in - server");
+                        String loginResp = login(username, password);
                         mySocket.sendMessage(request.getAddress(),
-                                request.getPort(), message);
+                                request.getPort(), loginResp);
                         break;
                     case "2":
                         System.out.println("Log Out -server");
@@ -55,16 +58,11 @@ public class Server {
                         System.out.println("Download -server");
                     case "5":
                         System.out.println("Create account - server");
-
                        String resp = createUser(username, password);
-
                         mySocket.sendMessage(request.getAddress(),
                                 request.getPort(), resp);
-
                         break;
-
                 }
-
             } //end while
         } // end try
         catch (Exception ex) {
@@ -72,23 +70,76 @@ public class Server {
         } // end catch
     } //end main
 
+    public static String login(String username, String password){
+        List<User> listOfAllUsers = new ArrayList<>();
+        String FILENAME = "C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\Users.txt";
+        BufferedReader br = null;
+        FileReader fr = null;
+        String serverResponse = "";
+        try {
+            fr = new FileReader(FILENAME);
+            br = new BufferedReader(fr);
+            String sCurrentLine;
+            String uname="", pass="";
+            while ((sCurrentLine = br.readLine()) != null) {
+                System.out.println(sCurrentLine);
+                String[] splitMessage = sCurrentLine.split(", ");
+                uname = splitMessage[0];
+                uname = uname.trim();
+                pass = splitMessage[1];
+                pass = pass.trim();
+                listOfAllUsers.add(new User((String)uname, (String)pass));
+            }
+            for(User u : listOfAllUsers){
+                if(u.getUsername() == (username) && u.getPassword() == (password)) //.equals(Object obj) == value equality
+                {
+                    User us = new User(username, password);
+                    LoggedInUsers.AddToList(us);
+                    System.out.println(username + " is now logged in");
+                    serverResponse = username + " is now logged in";
+                }
+                /*else // not right
+                {
+                    serverResponse = username + " is not a registered user";
+                }
+                */
+            }
+
+
+            LoggedInUsers.getLoggedInUsers();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null)
+                    br.close();
+                if (fr != null)
+                    fr.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return serverResponse;
+    }
+
 
     public static String createUser(String username, String password) {
         BufferedWriter bw = null;
         FileWriter fw = null;
+        //Set path & Create directory for each user in users/myName
         String path = "C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\users\\";;
         File dir = new File(path+username);
         String serverMessage = "default mssg";
+        //Check if directory exists
         if(!dir.exists()) {
             if (dir.mkdirs()) {
                 System.out.println(dir.toString() + " has been created");
                 try {
                     String message = username + ", " + password;
-                    fw = new FileWriter("Users.txt", true);
+                    fw = new FileWriter(path+"Users.txt", true);
                     bw = new BufferedWriter(fw);
                     bw.write(message + "\n");
                     bw.append("");
-
                     System.out.println("Users were added to file");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -98,7 +149,6 @@ public class Server {
                             bw.close();
                         if (fw != null)
                             fw.close();
-
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
