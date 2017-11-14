@@ -12,9 +12,11 @@ public class LoggedInUsers {
     }
 
     public static void getLoggedInUsers(){
+        int count=0;
         System.out.println("All the currently logged in users");
         for(User u: loggedInUsers){
             System.out.println(u.getUsername());
+            count++;
         }
     }
     public static String logOutUser(String username){
@@ -28,9 +30,10 @@ public class LoggedInUsers {
                 serverResponse = "700 " + username + " was logged out";
                 return serverResponse;
             }
+            i++;
         }
             serverResponse = "User not logged in";
-            i++;
+
             return serverResponse;
         }
     }

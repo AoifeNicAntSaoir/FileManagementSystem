@@ -12,20 +12,21 @@ public class ClientHelper {
    private int serverPort;
 
    ClientHelper(String hostName, String portNum)
-      throws SocketException, UnknownHostException { 
-  	   this.serverHost = InetAddress.getByName(hostName);
-  		this.serverPort = Integer.parseInt(portNum);
+      throws SocketException, UnknownHostException {
+      this.serverHost = InetAddress.getByName(hostName);
+      this.serverPort = Integer.parseInt(portNum);
       // instantiates a datagram socket for both sending
       // and receiving data
-   	this.mySocket = new MyClientDatagramSocket(); 
+      this.mySocket = new MyClientDatagramSocket();
    }
+
 
    public String send(String message)
            throws SocketException, IOException {
       String response = "";
       mySocket.sendMessage( serverHost, serverPort, message);
       // now receive the echo
-      response = mySocket.receiveMessage();
+
       return response;
    }
 

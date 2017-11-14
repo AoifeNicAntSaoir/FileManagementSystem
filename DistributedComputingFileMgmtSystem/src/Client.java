@@ -16,7 +16,7 @@ public class Client {
          ClientHelper helper = new ClientHelper(hostName, portNum);
          boolean done = false;
          String message, serverResult;
-         
+
          while (!done) {
             System.out.println("--------Enter your option-----------------" +
                                  "\n1. Login" +
@@ -25,6 +25,7 @@ public class Client {
                                  "\n4. Download" +
                                  "\n5. Register" +
                                  "\n6 Quit");
+
             String option = br.readLine();
 
             switch(option) {
@@ -56,8 +57,16 @@ public class Client {
                   System.out.println(message);
                   serverResult = helper.send( message);
                   System.out.println(serverResult);
+                  break;
                case "3":
+                  System.out.println("You want to upload");
+                  System.out.println("Enter file path");
+                  String f = br.readLine();
+                  ///// not right
+                  break;
                case "4":
+                  System.out.println("You want to download");
+                  break;
                case "5":
                   System.out.println("You want to register");
                   System.out.println("Enter username");

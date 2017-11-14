@@ -23,7 +23,6 @@ static final int MAX_LEN = 100;
                     new DatagramPacket(sendBuffer, sendBuffer.length,
                             receiverHost, receiverPort);
             this.send(datagram);
-
     }
 
    public String receiveMessage()

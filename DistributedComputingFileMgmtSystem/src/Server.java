@@ -43,6 +43,7 @@ public class Server {
                 DatagramMessage request = mySocket.receiveMessageAndSender();
                 System.out.println("Request received");
                 String message = request.getMessage();
+
                 System.out.println("message received: " + message);
                 // Decode message from 1, myUsername, myPassword etc.
                 String[] splitMessage = message.split(",");

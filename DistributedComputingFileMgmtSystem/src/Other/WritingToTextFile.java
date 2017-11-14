@@ -1,4 +1,4 @@
-/**
+package Other; /**
  * Created by Aoife Sayers on 11/11/2017.
  */
 import java.io.BufferedWriter;
