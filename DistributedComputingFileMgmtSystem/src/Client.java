@@ -29,24 +29,33 @@ public class Client {
 
             switch(option) {
                case "1":
-               case "2":
-                  if(option.equals("1")) {
-                     System.out.println("You want to log in");
-                  }
-                  else if(option.equals("2")){
-                     System.out.println("You want to log out");
-                  }
+                  System.out.println("You want to log in");
                   System.out.println("Enter username");
                   String username = br.readLine();
                   System.out.println("Enter password");
                   String password = br.readLine();
-                  if(username.equals("") || username.isEmpty()) {
+                  if(username.equals("") || username.isEmpty() ||
+                          password.equals("") || password.isEmpty()) {
                      throw new EmptyArgsException("You left Empty Fields");
                   }
                   message = "1" + ", " + username + ", " + password;
                   serverResult = helper.send( message);
                   System.out.println(serverResult);
                   break;
+               case "2":
+                  System.out.println("You want to log out");
+                  System.out.println("Enter username");
+                  username = br.readLine();
+                  System.out.println("Enter password");
+                  password = br.readLine();
+                  if(username.equals("") || username.isEmpty() ||
+                          password.equals("") || password.isEmpty()) {
+                     throw new EmptyArgsException("You left Empty Fields");
+                  }
+                  message = "2" + ", " + username + ", " + password;
+                  System.out.println(message);
+                  serverResult = helper.send( message);
+                  System.out.println(serverResult);
                case "3":
                case "4":
                case "5":
@@ -67,6 +76,9 @@ public class Client {
                   System.out.println("Quitting!");
                   helper.done();
                   done = true;
+                  break;
+               default:
+                  System.out.println("Invalid option! Try again");
                   break;
             }
           } // end while

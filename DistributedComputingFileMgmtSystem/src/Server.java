@@ -1,3 +1,5 @@
+import sun.rmi.runtime.Log;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,12 +60,12 @@ public class Server {
                     case "1":
                         System.out.println("Log in - server");
                         String loginResp = login(username, password);
-                        System.out.println(loginResp);
                         mySocket.sendMessage(request.getAddress(), request.getPort(), loginResp);
                         break;
                     case "2":
                         System.out.println("Log Out - server");
-                        LoggedInUsers.logOutUser(username);
+                        String logoutResp = logout(username);
+                        mySocket.sendMessage(request.getAddress(), request.getPort(), logoutResp);
                         break;
                     case "3":
                         System.out.println("Upload - server");
@@ -75,7 +77,12 @@ public class Server {
                         String resp = createUser(username, password);
                         mySocket.sendMessage(request.getAddress(), request.getPort(), resp);
                         break;
+                    default:
+                        System.out.println("An error occured!");
+                        resp = "00: An error occured on ther server try again";
+                        mySocket.sendMessage(request.getAddress(), request.getPort(), resp);
                 }
+               LoggedInUsers.getLoggedInUsers();
             } //end while
         } // end try
         catch (Exception ex) {
@@ -83,9 +90,14 @@ public class Server {
         } // end catch
     } //end main
 
+    public static String logout(String username){
+        String logoutResp = LoggedInUsers.logOutUser(username);
+        return logoutResp;
+    }
+
     public static String login(String username, String password) {
         List<User> listOfAllUsers = new ArrayList<>();
-        String FILENAME = "C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\Users.txt";
+        String FILENAME = "C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\users\\Users.txt";
         BufferedReader br = null;
         BufferedReader bRead;
         FileReader fr = null;
