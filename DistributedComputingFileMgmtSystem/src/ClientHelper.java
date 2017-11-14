@@ -18,25 +18,15 @@ public class ClientHelper {
       // instantiates a datagram socket for both sending
       // and receiving data
    	this.mySocket = new MyClientDatagramSocket(); 
-   } 
-	
-   public String getLoginDetails( String message)
-      throws SocketException, IOException {                                                                                 
-      String response = "";
-      mySocket.loginLogout(serverHost, serverPort, message);
-	   // now receive the echo
-      response = mySocket.receiveMessage();
-      return response;
-   } //end getEcho
+   }
 
-   public String register(String message)
+   public String send(String message)
            throws SocketException, IOException {
       String response = "";
-      mySocket.createAccount( serverHost, serverPort, message);
+      mySocket.sendMessage( serverHost, serverPort, message);
       // now receive the echo
       response = mySocket.receiveMessage();
       return response;
-
    }
 
    public void done( ) throws SocketException {

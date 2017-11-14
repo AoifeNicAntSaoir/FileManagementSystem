@@ -8,6 +8,7 @@ public class Client {
    public static void main(String[] args) {
       InputStreamReader is = new InputStreamReader(System.in);
       BufferedReader br = new BufferedReader(is);
+
       try {
          System.out.println("Welcome to the File Management System client");
          String hostName = "localhost";
@@ -17,7 +18,7 @@ public class Client {
          String message, serverResult;
          
          while (!done) {
-            System.out.println("\n\nEnter your option" +
+            System.out.println("--------Enter your option-----------------" +
                                  "\n1. Login" +
                                  "\n2. Logout" +
                                  "\n3. Upload" +
@@ -43,7 +44,7 @@ public class Client {
                      throw new EmptyArgsException("You left Empty Fields");
                   }
                   message = "1" + ", " + username + ", " + password;
-                  serverResult = helper.getLoginDetails( message);
+                  serverResult = helper.send( message);
                   System.out.println(serverResult);
                   break;
                case "3":
@@ -54,23 +55,26 @@ public class Client {
                   username = br.readLine();
                   System.out.println("Enter password");
                   password = br.readLine();
+                  //Check empty fields
                   if(username.equals("") || password.equals(""))
                      throw new EmptyArgsException("Missing fields");
                   message = "5" + ", " + username + ", " + password;
-                  serverResult = helper.register( message);
+                  //Register
+                  serverResult = helper.send( message);
                   System.out.println(serverResult);
                   break;
                case "6":
                   System.out.println("Quitting!");
+                  helper.done();
+                  done = true;
                   break;
-
-
-
             }
           } // end while
       } // end try  
       catch (Exception ex) {
          ex.printStackTrace( );
       } // end catch
+
+
    } //end main
 } // end class      

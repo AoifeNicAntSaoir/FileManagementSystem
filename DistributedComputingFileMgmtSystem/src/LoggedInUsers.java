@@ -5,7 +5,7 @@ import java.util.List;
  * Created by Aoife Sayers on 13/11/2017.
  */
 public class LoggedInUsers {
-    public static ArrayList<User> loggedInUsers = new ArrayList<>();
+    private static ArrayList<User> loggedInUsers = new ArrayList<>();
 
     public static void AddToList(User user) {       //This method is called to populate the list
         loggedInUsers.add(user);
@@ -17,8 +17,20 @@ public class LoggedInUsers {
             System.out.println(u.getUsername());
         }
     }
-
-    public static void logOutUser(String username, String password){
-        loggedInUsers.remove(new User(username, password));
+    public static String logOutUser(String username){
+        String serverResponse = "";
+        int i = 0;
+        for (User u : loggedInUsers) {
+            if (u.getUsername().equals(username)) {
+                System.out.println(i);
+                loggedInUsers.remove(i);
+                System.out.println(username + "was removed from logged in/logged out users");
+                serverResponse = username + "was logged out";
+            }
+        }
+            serverResponse = "User not logged in";
+            i++;
+            return serverResponse;
+        }
     }
-}
+
