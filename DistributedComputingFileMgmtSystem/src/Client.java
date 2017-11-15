@@ -60,8 +60,17 @@ public class Client {
                   break;
                case "3":
                   System.out.println("You want to upload");
+                  System.out.println("Enter username");
+                  username = br.readLine();
                   System.out.println("Enter file path");
-                  String f = br.readLine();
+                  String path = br.readLine();
+                  System.out.print("Enter title file:");
+                  String title = br.readLine();
+                  message = "3, " + username + ", " + "checkingLoggedOn";
+                  serverResult = helper.send(message);
+                  System.out.println(serverResult);
+
+                 // response = ftpClient.uploadFile(user, path, title);
                   ///// not right
                   break;
                case "4":

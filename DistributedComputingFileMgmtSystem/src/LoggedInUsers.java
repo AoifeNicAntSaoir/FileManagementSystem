@@ -19,6 +19,7 @@ public class LoggedInUsers {
             count++;
         }
     }
+
     public static String logOutUser(String username){
         String serverResponse = "";
         int i = 0;
@@ -35,6 +36,16 @@ public class LoggedInUsers {
             serverResponse = "User not logged in";
 
             return serverResponse;
+        }
+
+        public static Boolean isLoggedIn(String username){
+            for (User u : loggedInUsers) {
+                if (u.getUsername().equals(username)) {
+                    return true;
+                }
+
+            }
+            return false;
         }
     }
 

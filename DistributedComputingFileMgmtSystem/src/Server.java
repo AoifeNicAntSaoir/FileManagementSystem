@@ -55,6 +55,8 @@ public class Server {
                 username = username.trim();
                 password = password.trim();
 
+                login("admin","password");
+
                 //Determine which type of message & invoke different methods
                 //1 Login,  2 Logout, 3 upload, 4 download, 5. register
                 switch (messageCode) {
@@ -70,6 +72,12 @@ public class Server {
                         break;
                     case "3":
                         System.out.println("Upload - server");
+                        //if(password.equals("checkingLoggedOn")/) {
+                            System.out.println("Server is checking if " + username + " is logged on");
+                           String checkLoggedInRes = checkIfLoggedIn(username);
+                        System.out.println(checkLoggedInRes);
+                            mySocket.sendMessage(request.getAddress(), request.getPort(), checkLoggedInRes);
+                       // }
                         break;
                     case "4":
                         System.out.println("Download -server");
@@ -83,7 +91,7 @@ public class Server {
                         resp = "00: An error occured on ther server try again";
                         mySocket.sendMessage(request.getAddress(), request.getPort(), resp);
                 }
-               LoggedInUsers.getLoggedInUsers();
+              // LoggedInUsers.getLoggedInUsers();
             } //end while
         } // end try
         catch (Exception ex) {
@@ -91,6 +99,19 @@ public class Server {
         } // end catch
     } //end main
 
+    public static String checkIfLoggedIn(String username){
+       Boolean isLoggedIn =  LoggedInUsers.isLoggedIn(username);
+        System.out.println(isLoggedIn);
+        String loggedInResp = "default";
+        if(isLoggedIn.equals(false)){
+            loggedInResp = username + " is not logged in";
+            return loggedInResp;
+        }
+        else if(isLoggedIn.equals(true)) {
+            loggedInResp = username + " is logged in";
+        }
+        return loggedInResp;
+    }
     public static String logout(String username){
         String logoutResp = LoggedInUsers.logOutUser(username);
         return logoutResp;
