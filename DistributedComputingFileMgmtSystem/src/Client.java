@@ -99,6 +99,8 @@ public class Client {
                   break;
                case "4":
                   System.out.println("You want to download");
+
+
                   break;
                case "5":
                   System.out.println("You want to register");
@@ -129,8 +131,6 @@ public class Client {
       catch (Exception ex) {
          ex.printStackTrace();
       } // end catch
-
-
    } //end main
 
    public static boolean validateFileType(String fileType) {
@@ -140,24 +140,5 @@ public class Client {
          return true;
       }
       return false;
-   }
-
-   //shitty message upload
-   public static String readFileIn(String fileName) throws IOException{
-      String allFileContent = "";
-      BufferedReader br = new BufferedReader(new FileReader(fileName));
-      try {
-         StringBuilder sb = new StringBuilder();
-         String line = br.readLine();
-         while (line != null) {
-            sb.append(line);
-            sb.append(System.lineSeparator());
-            line = br.readLine();
-         }
-         allFileContent = sb.toString();
-      } finally {
-         br.close();
-      }
-      return allFileContent;
    }
 } // end class      

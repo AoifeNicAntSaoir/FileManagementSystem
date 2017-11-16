@@ -26,12 +26,9 @@ public class ClientHelper {
       String response = "";
       mySocket.sendMessage( serverHost, serverPort, message);
       // now receive the echo
-
+      response = mySocket.receiveMessage();
       return response;
    }
-
- //  public String sendFile(byte[] fileBytes){}
-
 
    public void done( ) throws SocketException {
       mySocket.close( );
