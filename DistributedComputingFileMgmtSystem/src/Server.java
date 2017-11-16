@@ -33,6 +33,8 @@ public class Server {
         String messageCode;
         String username;
         String password;
+        String fileName;
+        String outputPath;
         try {
             // instantiates a datagram socket for both sending and receiving data
             MyServerDatagramSocket mySocket = new MyServerDatagramSocket(serverPort);
@@ -72,19 +74,30 @@ public class Server {
                         break;
                     case "3":
                         System.out.println("Upload - server");
-                        //if(password.equals("checkingLoggedOn")/) {
-                            System.out.println("Server is checking if " + username + " is logged on");
-                           String checkLoggedInRes = checkIfLoggedIn(username);
-                        System.out.println(checkLoggedInRes);
-                            mySocket.sendMessage(request.getAddress(), request.getPort(), checkLoggedInRes);
-                        FileOutputStream fos = new FileOutputStream("C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\workpls.txt");
-                        fos.write(message.getBytes());
-                        fos.close();
+                        System.out.println("The message recieved from the client was: " + message);
+
+                        String[] splitUploadMessage = message.split(",");
+                        messageCode = splitUploadMessage[0];
+                        messageCode = messageCode.trim();
+
+                        username = splitUploadMessage[1];
+                        username = username.trim();
+
+                        fileName = splitUploadMessage[2];
+                        fileName = fileName.trim();
+
+                        String fileContent = splitUploadMessage[3];
+
+                        try {
+                            FileOutputStream fos = new FileOutputStream("C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\users\\" + username + "\\" + fileContent);
+                            fos.write(message.getBytes());
+                            fos.close();
+                        }catch (Exception ex){
+                                ex.printStackTrace();
+                        }
 
 
 
-
-                       // }
                         break;
                     case "4":
                         System.out.println("Download -server");
@@ -161,8 +174,6 @@ public class Server {
         String serverResponse = "501: Credentials entered incorrect/ user does not exist";
         for(User u: userList)
         {
-            System.out.println(username + "" + u.getUsername());
-            System.out.println(password + "" + u.getPassword());
             if(username.equals(u.getUsername()) &&  password.equals(u.getPassword()))
             {
                 serverResponse =  "500: " + username + " found & logged in";

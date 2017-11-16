@@ -30,6 +30,8 @@ public class ClientHelper {
       return response;
    }
 
+ //  public String sendFile(byte[] fileBytes){}
+
 
    public void done( ) throws SocketException {
       mySocket.close( );
