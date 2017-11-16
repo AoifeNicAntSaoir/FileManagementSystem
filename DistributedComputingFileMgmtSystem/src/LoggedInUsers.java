@@ -7,7 +7,7 @@ import java.util.List;
 public class LoggedInUsers {
     private static ArrayList<User> loggedInUsers = new ArrayList<>();
 
-    public static void AddToList(User user) {       //This method is called to populate the list
+    public static  void AddToList(User user) {       //This method is called to populate the list
         loggedInUsers.add(user);
     }
 

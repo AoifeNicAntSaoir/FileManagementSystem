@@ -87,14 +87,10 @@ public class Server {
                         fileName = fileName.trim();
 
                         String fileContent = splitUploadMessage[3];
+                        FileOutputStream fos = new FileOutputStream("C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\users\\" + username + "\\" + fileName);
+                        fos.write(fileContent.getBytes());
+                        fos.close();
 
-                        try {
-                            FileOutputStream fos = new FileOutputStream("C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\users\\" + username + "\\" + fileContent);
-                            fos.write(message.getBytes());
-                            fos.close();
-                        }catch (Exception ex){
-                                ex.printStackTrace();
-                        }
 
 
 
