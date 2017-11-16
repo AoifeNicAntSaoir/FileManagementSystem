@@ -62,16 +62,15 @@ public class Client {
                   System.out.println("You want to upload");
                   System.out.println("Enter username");
                   username = br.readLine();
-                  System.out.println("Enter file path");
-                  String path = br.readLine();
-                  System.out.print("Enter title file:");
-                  String title = br.readLine();
                   message = "3, " + username + ", " + "checkingLoggedOn";
                   serverResult = helper.send(message);
                   System.out.println(serverResult);
 
-                 // response = ftpClient.uploadFile(user, path, title);
-                  ///// not right
+                  System.out.println("Enter file path");
+                  String path = br.readLine();
+                  String content = readFileIn(path);
+                  helper.send("3" + ", " +  username + ", " + content);
+
                   break;
                case "4":
                   System.out.println("You want to download");
@@ -107,4 +106,22 @@ public class Client {
 
 
    } //end main
+
+   public static String readFileIn(String fileName) throws IOException{
+      String allFileContent = "";
+      BufferedReader br = new BufferedReader(new FileReader(fileName));
+      try {
+         StringBuilder sb = new StringBuilder();
+         String line = br.readLine();
+         while (line != null) {
+            sb.append(line);
+            sb.append(System.lineSeparator());
+            line = br.readLine();
+         }
+         allFileContent = sb.toString();
+      } finally {
+         br.close();
+      }
+      return allFileContent;
+   }
 } // end class      

@@ -25,6 +25,7 @@ public class MyDatagramSocket extends DatagramSocket {
          this.send(datagram);
    } // end sendMessage
 
+
    public String receiveMessage()
 		throws IOException {		
          byte[ ] receiveBuffer = new byte[MAX_LEN];

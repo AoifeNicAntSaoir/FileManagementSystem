@@ -30,6 +30,7 @@ public class ClientHelper {
       return response;
    }
 
+
    public void done( ) throws SocketException {
       mySocket.close( );
    }  //end done

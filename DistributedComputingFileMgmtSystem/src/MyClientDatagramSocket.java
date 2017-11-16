@@ -7,13 +7,15 @@ import java.io.*;
  * @author M. L. Liu
  */
 public class MyClientDatagramSocket extends DatagramSocket {
-static final int MAX_LEN = 100;  
+static final int MAX_LEN = 100;
    MyClientDatagramSocket( ) throws SocketException{
      super( );
    }
    MyClientDatagramSocket(int portNo) throws SocketException{
      super(portNo);
    }
+
+
 
     public void sendMessage(InetAddress receiverHost,
                               int receiverPort,
@@ -24,6 +26,13 @@ static final int MAX_LEN = 100;
                             receiverHost, receiverPort);
             this.send(datagram);
     }
+/*
+    public void sendFile(InetAddress receiverHost, int receiverPort,String fileName){
+        File file = new File(fileName);
+        byte[] sendBuffer = new byte[fileName.length()];
+
+    }
+*/
 
    public String receiveMessage()
 		throws IOException {		

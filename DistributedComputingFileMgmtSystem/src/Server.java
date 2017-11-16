@@ -77,6 +77,13 @@ public class Server {
                            String checkLoggedInRes = checkIfLoggedIn(username);
                         System.out.println(checkLoggedInRes);
                             mySocket.sendMessage(request.getAddress(), request.getPort(), checkLoggedInRes);
+                        FileOutputStream fos = new FileOutputStream("C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\workpls.txt");
+                        fos.write(message.getBytes());
+                        fos.close();
+
+
+
+
                        // }
                         break;
                     case "4":

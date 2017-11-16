@@ -7,12 +7,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 public class stuff {
-    public static void main(String[] args) throws IOException {
+    public void testing(){
 
 
-        Writer output;
-        output = new BufferedWriter(new FileWriter("C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\myFile.txt", true));  //clears file every time
-        output.append("hi!");
-        output.close();
+
     }
 }
