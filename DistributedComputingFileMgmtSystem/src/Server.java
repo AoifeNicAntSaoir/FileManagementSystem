@@ -88,11 +88,16 @@ public class Server {
 
                         fileName = splitUploadMessage[2];
                         fileName = fileName.trim();
-
-                        String fileContent = splitUploadMessage[3];
-                        FileOutputStream fos = new FileOutputStream("C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\users\\" + username + "\\" + fileName);
-                        fos.write(fileContent.getBytes());
-                        fos.close();
+                        try {
+                            String fileContent = splitUploadMessage[3];
+                            FileOutputStream fos = new FileOutputStream("C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\users\\" + username + "\\" + fileName);
+                            fos.write(fileContent.getBytes());
+                            fos.close();
+                            mySocket.sendMessage(request.getAddress(), request.getPort(), "800 File Uploaded successfully");
+                        }catch (Exception ex){
+                            mySocket.sendMessage(request.getAddress(), request.getPort(), "801 Error Uploading File");
+                            ex.printStackTrace();
+                        }
                         break;
                     case "4":
                         System.out.println("Download -server");
@@ -116,8 +121,6 @@ public class Server {
                             byte[] data = Files.readAllBytes(path);
                             String byteDataString = new String(data);
                             mySocket.sendMessage(request.getAddress(), request.getPort(), byteDataString);
-
-
                         }
                         break;
                     case "5":

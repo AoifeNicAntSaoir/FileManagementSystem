@@ -1,12 +1,12 @@
 # FileManagementSystem
-Simple File Management System allowing a user to login, logout, register, upload or download a file using Datagram Sockets in Java. Distributed Computing Project 4th year
+Simple File Management System allowing a user to login, logout, register, upload or download a file using Datagram Sockets in a Java console. Distributed Computing Project 4th year
 
-- Stores users details in text file in format *myUsername, myPassword*
-- Creates users own folder for each user - user/*myUsername*
+- Stores users details in text file in format *myUsername, myPassword* in DistributedComputingFileMgmtSystem\users\Usert.txt
+- Creates users own folder for each user - user/*myUsername* in DistributedComputingFileMgmtSystem\users
 
 
 
-##Server Codes
+## Implementation of my own protocol -Server Codes
 - 1 - Login
 - 2 - Logout 
 - 3 - Upload 
@@ -28,7 +28,8 @@ Simple File Management System allowing a user to login, logout, register, upload
 ----------
 ## Installation ##
 
- 1. Run Server.java
- 2. Run Client.java
+ 1. javac *.java
+ 2. java Server.java
+ 3. java Client.java
 
 

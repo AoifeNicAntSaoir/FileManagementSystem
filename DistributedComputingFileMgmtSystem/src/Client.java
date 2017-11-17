@@ -95,6 +95,7 @@ public class Client {
                   }
                   System.out.println("Your file type" + fileType);
                   serverResult = helper.send("3" + ", " +  username + ", " + fileName + ", " + byteDataString);
+                  System.out.println(serverResult);
 
                   break;
                case "4":
