@@ -14,15 +14,12 @@ public class DatagramMessage{
       this.senderAddress = addr;
       this.senderPort = port;
    }
-
    public String getMessage( ) {
       return this.message;
    }
-
    public InetAddress getAddress( ) {
       return this.senderAddress;
    }
-
    public int getPort( ) {
       return this.senderPort;
    }

@@ -3,14 +3,13 @@ import java.io.*;
 
 /**
  * This class is a module which provides the application logic
- * for an Echo client using connectionless datagram socket.
+ * for an FileTransferProtocol using connectionless datagram socket.
  * @author M. L. Liu
  */
 public class ClientHelper {
    private MyClientDatagramSocket mySocket;
    private InetAddress serverHost;
    private int serverPort;
-
    ClientHelper(String hostName, String portNum)
       throws SocketException, UnknownHostException {
       this.serverHost = InetAddress.getByName(hostName);
@@ -19,8 +18,6 @@ public class ClientHelper {
       // and receiving data
       this.mySocket = new MyClientDatagramSocket();
    }
-
-
    public String send(String message)
            throws SocketException, IOException {
       String response = "";
@@ -29,9 +26,7 @@ public class ClientHelper {
       response = mySocket.receiveMessage();
       return response;
    }
-
    public void done( ) throws SocketException {
       mySocket.close( );
    }  //end done
-
 } //end class

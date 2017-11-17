@@ -1,5 +1,3 @@
-import sun.rmi.runtime.Log;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This module contains the application logic of an echo server
+ * This module contains the application logic of an ftp server
  * which uses a connectionless datagram socket for interprocess 
  * communication.
  * A command-line argument is required to specify the server port.
@@ -32,7 +30,7 @@ download unsuccessful
  */
 public class Server {
     public static void main(String[] args) {
-        int serverPort = 7;    // default port
+        int serverPort = 7;
         String messageCode;
         String username;
         String password;
@@ -61,7 +59,6 @@ public class Server {
                 password = password.trim();
 
                 login("admin","password");
-
                 //Determine which type of message & invoke different methods
                 //1 Login,  2 Logout, 3 upload, 4 download, 5. register
                 switch (messageCode) {
@@ -133,7 +130,6 @@ public class Server {
                         resp = "00: An error occured on ther server try again";
                         mySocket.sendMessage(request.getAddress(), request.getPort(), resp);
                 }
-              // LoggedInUsers.getLoggedInUsers();
             } //end while
         } // end try
         catch (Exception ex) {
@@ -206,7 +202,6 @@ public class Server {
         return serverResponse;
     }
 
-
     public static String createUser(String username, String password) {
         BufferedWriter bw = null;
         FileWriter fw = null;
@@ -245,7 +240,6 @@ public class Server {
         }
         return serverMessage;
     }
-
 }//end class
 
 

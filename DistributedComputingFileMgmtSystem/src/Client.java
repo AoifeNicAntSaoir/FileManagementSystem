@@ -1,28 +1,25 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
-import sun.rmi.runtime.Log;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * This module contains the presentaton logic of an Echo Client.
+ * This module contains the presentaton logic of a FTP System.
+ * Adaption of an EchoClient from M. L. Liu
  * @author M. L. Liu
  */
 public class Client {
    public static void main(String[] args) {
       InputStreamReader is = new InputStreamReader(System.in);
       BufferedReader br = new BufferedReader(is);
-
       try {
          System.out.println("Welcome to the File Management System client");
          String hostName = "localhost";
-         String portNum = "7";          // default port number
+         String portNum = "7";
          ClientHelper helper = new ClientHelper(hostName, portNum);
          boolean done = false;
          String message, serverResult;
-
+         //Program Loop
          while (!done) {
             System.out.println("--------Enter your option-----------------" +
                     "\n1. Login" +
@@ -31,11 +28,9 @@ public class Client {
                     "\n4. Download" +
                     "\n5. Register" +
                     "\n6 Quit");
-
             String option = br.readLine();
-
             switch (option) {
-               case "1":
+               case "1": //Login
                   System.out.println("You want to log in");
                   System.out.println("Enter username");
                   String username = br.readLine();
@@ -49,7 +44,7 @@ public class Client {
                   serverResult = helper.send(message);
                   System.out.println(serverResult);
                   break;
-               case "2":
+               case "2": //Logout
                   System.out.println("You want to log out");
                   System.out.println("Enter username");
                   username = br.readLine();
@@ -64,8 +59,8 @@ public class Client {
                   serverResult = helper.send(message);
                   System.out.println(serverResult);
                   break;
-               case "3":
-                  //Check if the user is logged in
+               case "3": //Upload
+                  //Check Users Details
                   System.out.println("You want to upload");
                   LoggedInUsers.AddToList(new User("AoifeSayers", "Hi"));
                   LoggedInUsers.getLoggedInUsers();
@@ -96,9 +91,8 @@ public class Client {
                   System.out.println("Your file type" + fileType);
                   serverResult = helper.send("3" + ", " +  username + ", " + fileName + ", " + byteDataString);
                   System.out.println(serverResult);
-
                   break;
-               case "4":
+               case "4": //Downloads
                   System.out.println("You want to download");
                   LoggedInUsers.AddToList(new User("AoifeSayers", "Hi"));
                   LoggedInUsers.getLoggedInUsers();
@@ -120,12 +114,8 @@ public class Client {
                   fos.write(result.getBytes());
                   fos.close();
                   System.out.println("File Downloaded to this destination: C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\" + saveFileAs);
-
-
-
-
                   break;
-               case "5":
+               case "5": //Register
                   System.out.println("You want to register");
                   System.out.println("Enter username");
                   username = br.readLine();
@@ -135,11 +125,10 @@ public class Client {
                   if (username.equals("") || password.equals(""))
                      throw new EmptyArgsException("Missing fields");
                   message = "5" + ", " + username + ", " + password;
-                  //Register
                   serverResult = helper.send(message);
                   System.out.println(serverResult);
                   break;
-               case "6":
+               case "6": //Quit
                   System.out.println("Quitting!");
                   helper.done();
                   done = true;
@@ -147,15 +136,13 @@ public class Client {
                default:
                   System.out.println("Invalid option! Try again");
                   break;
-
-            }
+            }// end switch
          } // end while
       } // end try  
       catch (Exception ex) {
          ex.printStackTrace();
       } // end catch
    } //end main
-
    public static boolean validateFileType(String fileType) {
       if (fileType.equalsIgnoreCase(".jpg") || fileType.equalsIgnoreCase(".txt") ||
               fileType.equalsIgnoreCase(".png") || fileType.equalsIgnoreCase(".pdf") ||

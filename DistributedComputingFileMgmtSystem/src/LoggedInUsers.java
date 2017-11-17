@@ -6,11 +6,9 @@ import java.util.List;
  */
 public class LoggedInUsers {
     private static ArrayList<User> loggedInUsers = new ArrayList<>();
-
     public static  void AddToList(User user) {       //This method is called to populate the list
         loggedInUsers.add(user);
     }
-
     public static void getLoggedInUsers(){
         int count=0;
         System.out.println("All the currently logged in users");
@@ -19,7 +17,6 @@ public class LoggedInUsers {
             count++;
         }
     }
-
     public static String logOutUser(String username){
         String serverResponse = "";
         int i = 0;
@@ -33,19 +30,16 @@ public class LoggedInUsers {
             }
             i++;
         }
-            serverResponse = "User not logged in";
-
+        serverResponse = "User not logged in";
             return serverResponse;
         }
-
         public static Boolean isLoggedIn(String username){
             for (User u : loggedInUsers) {
                 if (u.getUsername().equals(username)) {
                     return true;
                 }
-
             }
             return false;
         }
-    }
+}//End class
 
