@@ -1,6 +1,9 @@
 import sun.rmi.runtime.Log;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,13 +93,33 @@ public class Server {
                         FileOutputStream fos = new FileOutputStream("C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\users\\" + username + "\\" + fileName);
                         fos.write(fileContent.getBytes());
                         fos.close();
-
-
-
-
                         break;
                     case "4":
                         System.out.println("Download -server");
+                        if(password.equals("getDirectory")){
+                            System.out.println("Getting "  + username + "'s directory");
+                            File[] files = new File("C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\users\\"+username).listFiles();
+                            System.out.println("\\users\\"+username);
+                            List<String> listOfFiles = new ArrayList<String>();
+                            for(File f:files){
+                                System.out.println(f.getName());
+                                listOfFiles.add(f.getName());
+                            }
+                            String response = "Getting Directory \\users\\"+username + ": \n" + listOfFiles.toString();
+                            System.out.println(response);
+                            mySocket.sendMessage(request.getAddress(), request.getPort(), response);
+                        }
+                        else {
+                            System.out.println("Getting file");
+                            String strPath = "C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\users\\" + username+"\\"+password;
+                            Path path = Paths.get(strPath);
+                            byte[] data = Files.readAllBytes(path);
+                            String byteDataString = new String(data);
+                            mySocket.sendMessage(request.getAddress(), request.getPort(), byteDataString);
+
+
+                        }
+                        break;
                     case "5":
                         System.out.println("Create account - server");
                         String resp = createUser(username, password);

@@ -84,7 +84,7 @@ public class Client {
                   String byteDataString = new String(data);
                   //Save File as
                   System.out.println("The File Management System supports the following file types: " +
-                          "\n.jpg, .jpeg, .txt, .png, .pdf, .html, .doc, .docs");
+                          "\n.jpg, .txt, .png, .pdf, .doc,");
                   System.out.println("Enter server file name");
                   String fileName = br.readLine();
                   System.out.println("File you want to upload: " + fileName);
@@ -99,6 +99,28 @@ public class Client {
                   break;
                case "4":
                   System.out.println("You want to download");
+                  LoggedInUsers.AddToList(new User("AoifeSayers", "Hi"));
+                  LoggedInUsers.getLoggedInUsers();
+                  System.out.println("Enter username");
+                  username = br.readLine();
+                  if (LoggedInUsers.isLoggedIn(username)==false){
+                     System.out.println(username + " is not logged in");
+                     break;
+                  }
+                  serverResult = helper.send("4, " + username + ", "  +"getDirectory");
+                  System.out.println(serverResult);
+                  System.out.println("Enter file name you wish to download");
+                  fileName = br.readLine();
+                  System.out.println("Enter name you wish to call the file");
+                  String saveFileAs = br.readLine();
+                  String result = helper.send("4, " + username + ", " + fileName);
+                  System.out.println("Result received" + result);
+                  FileOutputStream fos = new FileOutputStream("C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\" + saveFileAs);
+                  fos.write(result.getBytes());
+                  fos.close();
+                  System.out.println("File Downloaded to this destination: C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\" + saveFileAs);
+
+
 
 
                   break;
@@ -134,9 +156,9 @@ public class Client {
    } //end main
 
    public static boolean validateFileType(String fileType) {
-      if (fileType.equalsIgnoreCase(".jpg") || fileType.equalsIgnoreCase(".jpeg") || fileType.equalsIgnoreCase(".txt") ||
-              fileType.equalsIgnoreCase(".png") || fileType.equalsIgnoreCase(".pdf") || fileType.equalsIgnoreCase(".html") ||
-              fileType.equalsIgnoreCase(".doc") || fileType.equalsIgnoreCase(".docs")) {
+      if (fileType.equalsIgnoreCase(".jpg") || fileType.equalsIgnoreCase(".txt") ||
+              fileType.equalsIgnoreCase(".png") || fileType.equalsIgnoreCase(".pdf") ||
+              fileType.equalsIgnoreCase(".doc")) {
          return true;
       }
       return false;
