@@ -4,3 +4,6 @@ Meow, cat
 Molly, woof
 admin, password
 JoeSoap, isteachLeat
+netbeans, netb
+oonagh, boo
+Hi, aoi
