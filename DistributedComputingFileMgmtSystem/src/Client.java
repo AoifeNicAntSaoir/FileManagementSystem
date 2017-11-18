@@ -1,4 +1,6 @@
 import java.io.*;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -40,8 +42,7 @@ public class Client {
                           password.equals("") || password.isEmpty()) {
                      throw new EmptyArgsException("You left Empty Fields");
                   }
-                  message = "1" + ", " + username + ", " + password;
-                  serverResult = helper.send(message);
+                  serverResult = login(username, password);
                   System.out.println(serverResult);
                   break;
                case "2": //Logout
@@ -54,9 +55,7 @@ public class Client {
                           password.equals("") || password.isEmpty()) {
                      throw new EmptyArgsException("You left Empty Fields");
                   }
-                  message = "2" + ", " + username + ", " + password;
-                  System.out.println(message);
-                  serverResult = helper.send(message);
+                  serverResult = logout(username, password);
                   System.out.println(serverResult);
                   break;
                case "3": //Upload
@@ -72,11 +71,8 @@ public class Client {
                   }
                   System.out.println("Please ensure the file you want to upload is in C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\" +
                           "\nEnter file name: ");
-                  String homePath = "C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\";
                   String filePath = br.readLine();
-                  Path path = Paths.get(homePath + filePath);
-                  byte[] data = Files.readAllBytes(path);
-                  String byteDataString = new String(data);
+
                   //Save File as
                   System.out.println("The File Management System supports the following file types: " +
                           "\n.jpg, .txt, .png, .pdf, .doc,");
@@ -89,7 +85,7 @@ public class Client {
                      throw new EmptyArgsException("Invalid file type");
                   }
                   System.out.println("Your file type" + fileType);
-                  serverResult = helper.send("3" + ", " +  username + ", " + fileName + ", " + byteDataString);
+                  serverResult = upload(username, fileName);
                   System.out.println(serverResult);
                   break;
                case "4": //Downloads
@@ -108,12 +104,9 @@ public class Client {
                   fileName = br.readLine();
                   System.out.println("Enter name you wish to call the file");
                   String saveFileAs = br.readLine();
-                  String result = helper.send("4, " + username + ", " + fileName);
-                  System.out.println("Result received" + result);
-                  FileOutputStream fos = new FileOutputStream("C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\" + saveFileAs);
-                  fos.write(result.getBytes());
-                  fos.close();
-                  System.out.println("File Downloaded to this destination: C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\" + saveFileAs);
+                  serverResult = download(username, fileName, saveFileAs);
+                  System.out.println(serverResult);
+
                   break;
                case "5": //Register
                   System.out.println("You want to register");
@@ -124,8 +117,7 @@ public class Client {
                   //Check empty fields
                   if (username.equals("") || password.equals(""))
                      throw new EmptyArgsException("Missing fields");
-                  message = "5" + ", " + username + ", " + password;
-                  serverResult = helper.send(message);
+                  serverResult = register(username, password);
                   System.out.println(serverResult);
                   break;
                case "6": //Quit
@@ -143,6 +135,43 @@ public class Client {
          ex.printStackTrace();
       } // end catch
    } //end main
+   public static String register(String username, String password) throws IOException {
+      ClientHelper helper = new ClientHelper("localhost", "7");
+      String message = "5" + ", " + username + ", " + password;
+      String serverResult = helper.send(message);
+      return serverResult;
+   }
+   public static String download(String username, String fileName, String saveFileAs) throws IOException {
+      ClientHelper helper = new ClientHelper("localhost","7");
+      String result = helper.send("4, " + username + ", " + fileName);
+      System.out.println("Result received" + result);
+      FileOutputStream fos = new FileOutputStream("C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\" + saveFileAs);
+      fos.write(result.getBytes());
+      fos.close();
+      System.out.println("File Downloaded to this destination: C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\" + saveFileAs);
+      return  result;
+   }
+   public static String upload(String username, String fileName) throws IOException {
+      ClientHelper helper = new ClientHelper("localhost","7");
+      String homePath = "C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\";
+      Path path = Paths.get(homePath + fileName);
+      byte[] data = Files.readAllBytes(path);
+      String byteDataString = new String(data);
+      String serverResult = helper.send("3" + ", " +  username + ", " + fileName + ", " + byteDataString);
+      return serverResult;
+   }
+   public static String logout(String username, String password) throws IOException {
+      ClientHelper helper = new ClientHelper("localhost", "7");
+      String message = "2" + ", " + username + ", " + password;
+      String serverResult = helper.send(message);
+      return serverResult;
+   }
+   public static String login(String username, String password) throws IOException {
+      ClientHelper helper = new ClientHelper("localhost", "7");
+      String message = "1" + ", " + username + ", " + password;
+      String serverResult = helper.send(message);
+      return serverResult;
+   }
    public static boolean validateFileType(String fileType) {
       if (fileType.equalsIgnoreCase(".jpg") || fileType.equalsIgnoreCase(".txt") ||
               fileType.equalsIgnoreCase(".png") || fileType.equalsIgnoreCase(".pdf") ||
