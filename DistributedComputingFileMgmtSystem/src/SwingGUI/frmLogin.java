@@ -231,7 +231,6 @@ public class frmLogin extends javax.swing.JFrame {
             String loginRes;
         try {
             loginRes = login(txtUsername.getText(), txtPassword.getText());
-                System.out.println("hi");
             JOptionPane.showMessageDialog(null,loginRes);
             txtUsername.setText("");
             txtPassword.setText("");

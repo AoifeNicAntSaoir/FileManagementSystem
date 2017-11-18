@@ -147,6 +147,7 @@ public class frmDownload extends javax.swing.JFrame {
             FileOutputStream fos = new FileOutputStream(os);
             fos.write(result.getBytes());
             fos.close();
+            JOptionPane.showMessageDialog(null, result);
             String sucMssg = "File Downloaded to this destination: C:\\FileManagementSystem\\DistributedComputingFileMgmtSystem\\" + fileSaveAs;
             JOptionPane.showMessageDialog(null, sucMssg , "File downloaded successfully", JOptionPane.INFORMATION_MESSAGE);
         } catch (SocketException ex) {
